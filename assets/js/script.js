@@ -2,6 +2,7 @@ let userFormEl = document.querySelector("#user-form");
 let nameInputEl = document.querySelector("#location");
 let weatherContainerEl = document.querySelector("#container");
 let weatherSearchTerm = document.querySelector("#search-term");
+let fiveDayContainerEl = document.querySelector("#five-day");
 let apiKey = '30399c9472d3ee86640e4f68e9cf9b12'
 let oldSearch = [];
 
@@ -87,6 +88,13 @@ function getLocationWeather(location) {
     .catch(function (error) {
       alert("Unable to connect to OpenWeather");
     });
+
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,alerts&appid=${apiKey}&units=imperial`
+
+
+
+
+
 };
 
 function displayCurrentWeather(data) {
@@ -95,26 +103,43 @@ function displayCurrentWeather(data) {
   let currentTempEl = document.createElement("li");
   let currentWindEl = document.createElement("li");
   let currentHumidityEl = document.createElement("li");
-  
+
   weatherSearchTerm.textContent = data.name;
   currentTempEl.textContent = `Temp ${data.main.temp}`;
   currentWindEl.textContent = `Wind ${data.wind.speed}`;
   currentHumidityEl.textContent = `Humidity ${data.main.humidity}`;
 
-  fiveDay.appendChild(currentUVEl);
   fiveDay.appendChild(currentTempEl);
   fiveDay.appendChild(currentWindEl);
   fiveDay.appendChild(currentHumidityEl);
-
 
 };
 
 function displayFiveDay(data) {
 
+  console.log(data.list)
+  console.log(data.list[1].wind.speed)
+
+  createWeatherCard(data,1)
+
+
 }
 
-function createWeatherCard(data, day) {
-  let weatherCardEl = document.createElement("li")
+function createWeatherCard(data,dayNumber) {
+  let weatherCardEl = document.createElement("ul");
+  let dateEl = document.createElement("li");
+  let tempEl = document.createElement("li");
+  let windEl = document.createElement("li")
+  let humidityEl = document.createElement("li");
+  dateEl.textContent = `${data.list[dayNumber].dt_txt}`;
+  tempEl.textContent = `Temp: ${data.list[dayNumber].main.temp}°F`;
+  windEl.textContent = `Wind: ${data.list[1].wind.speed}MPH`;
+  humidityEl.textContent = `Humidity: ${data.list[dayNumber].main.humidity}%`;
+  weatherCardEl.appendChild(dateEl);
+  weatherCardEl.appendChild(tempEl);
+  weatherCardEl.appendChild(windEl);
+  weatherCardEl.appendChild(humidityEl);
+  fiveDayContainerEl.appendChild(weatherCardEl)
 }
 
 loadOldSearch()
