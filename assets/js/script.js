@@ -1,12 +1,6 @@
 let userFormEl = document.querySelector("#user-form");
 let nameInputEl = document.querySelector("#location");
-let weatherContainerEl = document.querySelector("#container");
 let weatherSearchTerm = document.querySelector("#search-term");
-let fiveDayContainerEl = document.querySelector("#five-day");
-let currentWeather = document.getElementById('container');
-let currentTempEl = document.createElement("li");
-let currentWindEl = document.createElement("li");
-let currentHumidityEl = document.createElement("li");
 let currentUVEl = document.createElement("li");
 let apiKey = '30399c9472d3ee86640e4f68e9cf9b12'
 let oldSearch = [];
@@ -43,7 +37,6 @@ function formSubmitHandler(event) {
     oldSearch.push(location);
 
     localStorage.setItem("location", JSON.stringify(oldSearch));
-    weatherContainerEl.textContent = "";
     nameInputEl.value = "";
 
     let newLocation = document.createElement('button');
@@ -61,9 +54,8 @@ function formSubmitHandler(event) {
 };
 
 function getLocationWeather(location) {
-  weatherSearchTerm.textContent = location+ "-Current Weather";
+  weatherSearchTerm.textContent = location + "-Current Weather";
   let fiveDayApi = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}&units=imperial`
-  console.log(fiveDayApi)
   fetch(fiveDayApi)
     .then(function (response) {
       if (response.ok) {
@@ -76,6 +68,7 @@ function getLocationWeather(location) {
             .then(function (response) {
               if (response.ok) {
                 response.json().then(function (data) {
+
                   displayCurrentWeather(data);
                 });
               } else {
@@ -96,50 +89,33 @@ function getLocationWeather(location) {
 };
 
 function displayCurrentWeather(data) {
-  let currentWeatherContainer = document.createElement('div')
-  currentTempEl.textContent = `Temp ${data.current.temp}°F`;
-  currentWindEl.textContent = `Wind ${data.current.wind_speed}MPH`;
-  currentHumidityEl.textContent = `Humidity ${data.current.humidity}%`;
-  currentUVEl.textContent = `UV Index: ${data.current.uvi}`;
-  currentWeatherContainer.classList.add('card-weather')
+  document.getElementById('current-temp').textContent = 'Temp'+data.current.temp+'°F';
+  document.getElementById('current-wind').textContent = `Wind ${data.current.wind_speed}MPH`;
+  document.getElementById('current-humidity').textContent = `Humidity ${data.current.humidity}%`;
+  document.getElementById('current-UV').textContent = `UV Index: ${data.current.uvi}`;
   if (data.current.uvi > 6) {
-    currentUVEl.classList.add('danger');
+    document.getElementById('current-UV').classList.remove('good');
+    document.getElementById('current-UV').classList.add('bad');
   } else {
-    currentUVEl.classList.add('good');
+    document.getElementById('current-UV').classList.remove('bad');
+    document.getElementById('current-UV').classList.add('good');
   };
-  currentWeatherContainer.appendChild(currentTempEl);
-  currentWeatherContainer.appendChild(currentWindEl);
-  currentWeatherContainer.appendChild(currentHumidityEl);
-  currentWeatherContainer.appendChild(currentUVEl);
-  currentWeather.appendChild(currentWeatherContainer);
-
 };
 
 function displayFiveDay(data) {
-  console.log(data)
-  createWeatherCard(data, 4)
-  createWeatherCard(data, 12)
-  createWeatherCard(data, 20)
-  createWeatherCard(data, 28)
-  createWeatherCard(data, 36)
+  editWeatherCard(data, 4, 'one')
+  editWeatherCard(data, 12, 'two')
+  editWeatherCard(data, 20, 'three')
+  editWeatherCard(data, 28, 'four')
+  editWeatherCard(data, 36, 'five')
 
 }
-function createWeatherCard(data, dayNumber) {
-  let weatherCardEl = document.createElement("ul");
-  let dateEl = document.createElement("li");
-  let tempEl = document.createElement("li");
-  let windEl = document.createElement("li")
-  let humidityEl = document.createElement("li");
-  weatherCardEl.classList.add('card-weather')
-  dateEl.textContent = `${data.list[dayNumber].dt_txt}`;
-  tempEl.textContent = `Temp: ${data.list[dayNumber].main.temp}°F`;
-  windEl.textContent = `Wind: ${data.list[dayNumber].wind.speed}MPH`;
-  humidityEl.textContent = `Humidity: ${data.list[dayNumber].main.humidity}%`;
-  weatherCardEl.appendChild(dateEl);
-  weatherCardEl.appendChild(tempEl);
-  weatherCardEl.appendChild(windEl);
-  weatherCardEl.appendChild(humidityEl);
-  fiveDayContainerEl.appendChild(weatherCardEl)
+
+function editWeatherCard(data, dataNumber, day) {
+  document.getElementById(`${day}-date`).textContent = `${data.list[dataNumber].dt_txt}`;
+  document.getElementById(`${day}-temp`).textContent = `Temp: ${data.list[dataNumber].main.temp}°F`;
+  document.getElementById(`${day}-wind`).textContent = `Wind: ${data.list[dataNumber].wind.speed}MPH`;
+  document.getElementById(`${day}-humidity`).textContent = `Humidity: ${data.list[dataNumber].main.humidity}%`;
 }
 
 loadOldSearch()

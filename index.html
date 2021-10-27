@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <title>Weather</title>
 </head>
 
@@ -33,11 +32,48 @@
 
     <div class="col-12 col-md-8">
       <h2 id="search-term" class="subtitle"></h2>
-      <ul id="container" class="list-group"></ul>
-      <ul id="five-day" class="list-group">
-      </ul>
-    </div>
 
+      <ul id="container" class="list-group card-weather">
+        <div id="current-weather">
+          <li id="current-temp"></li>
+          <li id="current-wind"></li>
+          <li id="current-humidity"></li>
+          <li id="current-UV"></li>
+        </div>
+      </ul>
+
+      <ul id="five-day" class="five-day-grid">
+        <div id="day-one" class="card-weather">
+          <li id="one-date"></li>
+          <li id="one-temp"></li>
+          <li id="one-wind"></li>
+          <li id="one-humidity"></li>
+        </div>
+        <div id="day-two" class="card-weather">
+          <li id="two-date"></li>
+          <li id="two-temp"></li>
+          <li id="two-wind"></li>
+          <li id="two-humidity"></li>
+        </div>
+        <div id="day-three" class="card-weather">
+          <li id="three-date"></li>
+          <li id="three-temp"></li>
+          <li id="three-wind"></li>
+          <li id="three-humidity"></li>
+        </div>
+        <div id="day-four" class="card-weather">
+          <li id="four-date"></li>
+          <li id="four-temp"></li>
+          <li id="four-wind"></li>
+          <li id="four-humidity"></li>
+        </div>
+        <div id="day-five" class="card-weather">
+          <li id="five-date"></li>
+          <li id="five-temp"></li>
+          <li id="five-wind"></li>
+          <li id="five-humidity"></li>
+        </div>
+      </ul>
   </main>
 
   <script src="./assets/js/script.js"></script>
