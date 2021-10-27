@@ -111,6 +111,14 @@ p {
   border-radius: var(--border-radius);
 }
 
+.card-weather {
+  margin: 0 0 20px 0;
+  border: 3px solid var(--blue);
+  border-radius: var(--border-radius);
+  background-color: var(--blue);
+  color: white;
+}
+
 .card-header {
   color: var(--primary);
   background-color: var(--blue);

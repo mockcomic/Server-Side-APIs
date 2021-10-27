@@ -3,6 +3,11 @@ let nameInputEl = document.querySelector("#location");
 let weatherContainerEl = document.querySelector("#container");
 let weatherSearchTerm = document.querySelector("#search-term");
 let fiveDayContainerEl = document.querySelector("#five-day");
+let currentWeather = document.getElementById('container');
+let currentTempEl = document.createElement("li");
+let currentWindEl = document.createElement("li");
+let currentHumidityEl = document.createElement("li");
+let currentUVEl = document.createElement("li");
 let apiKey = '30399c9472d3ee86640e4f68e9cf9b12'
 let oldSearch = [];
 
@@ -56,14 +61,30 @@ function formSubmitHandler(event) {
 };
 
 function getLocationWeather(location) {
+  weatherSearchTerm.textContent = location+ "-Current Weather";
   let fiveDayApi = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}&units=imperial`
   console.log(fiveDayApi)
   fetch(fiveDayApi)
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          // console.log(data);
           displayFiveDay(data);
+          let lat = data.city.coord.lat
+          let lon = data.city.coord.lon
+          let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,alerts&appid=${apiKey}&units=imperial`
+          fetch(apiUrl)
+            .then(function (response) {
+              if (response.ok) {
+                response.json().then(function (data) {
+                  displayCurrentWeather(data);
+                });
+              } else {
+                alert("Error: " + response.statusText);
+              };
+            })
+            .catch(function (error) {
+              alert("Unable to connect to OpenWeather");
+            });
         });
       } else {
         alert("Error: " + response.statusText);
@@ -72,68 +93,47 @@ function getLocationWeather(location) {
     .catch(function (error) {
       alert("Unable to connect to OpenWeather");
     });
-
-    let apiCurrent = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=imperial`
-    console.log(apiCurrent)
-    fetch(apiCurrent)
-    .then(function (response) {
-      if (response.ok) {
-        response.json().then(function (data) {
-          displayCurrentWeather(data);
-        });
-      } else {
-        alert("Error: " + response.statusText);
-      };
-    })
-    .catch(function (error) {
-      alert("Unable to connect to OpenWeather");
-    });
-
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,alerts&appid=${apiKey}&units=imperial`
-
-
-
-
-
 };
 
 function displayCurrentWeather(data) {
-  console.log(data)
-  let fiveDay = document.getElementById('container');
-  let currentTempEl = document.createElement("li");
-  let currentWindEl = document.createElement("li");
-  let currentHumidityEl = document.createElement("li");
-
-  weatherSearchTerm.textContent = data.name;
-  currentTempEl.textContent = `Temp ${data.main.temp}`;
-  currentWindEl.textContent = `Wind ${data.wind.speed}`;
-  currentHumidityEl.textContent = `Humidity ${data.main.humidity}`;
-
-  fiveDay.appendChild(currentTempEl);
-  fiveDay.appendChild(currentWindEl);
-  fiveDay.appendChild(currentHumidityEl);
+  let currentWeatherContainer = document.createElement('div')
+  currentTempEl.textContent = `Temp ${data.current.temp}°F`;
+  currentWindEl.textContent = `Wind ${data.current.wind_speed}MPH`;
+  currentHumidityEl.textContent = `Humidity ${data.current.humidity}%`;
+  currentUVEl.textContent = `UV Index: ${data.current.uvi}`;
+  currentWeatherContainer.classList.add('card-weather')
+  if (data.current.uvi > 6) {
+    currentUVEl.classList.add('danger');
+  } else {
+    currentUVEl.classList.add('good');
+  };
+  currentWeatherContainer.appendChild(currentTempEl);
+  currentWeatherContainer.appendChild(currentWindEl);
+  currentWeatherContainer.appendChild(currentHumidityEl);
+  currentWeatherContainer.appendChild(currentUVEl);
+  currentWeather.appendChild(currentWeatherContainer);
 
 };
 
 function displayFiveDay(data) {
-
-  console.log(data.list)
-  console.log(data.list[1].wind.speed)
-
-  createWeatherCard(data,1)
-
+  console.log(data)
+  createWeatherCard(data, 4)
+  createWeatherCard(data, 12)
+  createWeatherCard(data, 20)
+  createWeatherCard(data, 28)
+  createWeatherCard(data, 36)
 
 }
-
-function createWeatherCard(data,dayNumber) {
+function createWeatherCard(data, dayNumber) {
   let weatherCardEl = document.createElement("ul");
   let dateEl = document.createElement("li");
   let tempEl = document.createElement("li");
   let windEl = document.createElement("li")
   let humidityEl = document.createElement("li");
+  weatherCardEl.classList.add('card-weather')
   dateEl.textContent = `${data.list[dayNumber].dt_txt}`;
   tempEl.textContent = `Temp: ${data.list[dayNumber].main.temp}°F`;
-  windEl.textContent = `Wind: ${data.list[1].wind.speed}MPH`;
+  windEl.textContent = `Wind: ${data.list[dayNumber].wind.speed}MPH`;
   humidityEl.textContent = `Humidity: ${data.list[dayNumber].main.humidity}%`;
   weatherCardEl.appendChild(dateEl);
   weatherCardEl.appendChild(tempEl);
