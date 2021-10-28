@@ -112,10 +112,11 @@ function displayFiveDay(data) {
   editWeatherCard(data, 28, 'four')
   editWeatherCard(data, 36, 'five')
   document.getElementById('five-day').classList.remove('hide')
+  document.getElementById('forecast').classList.remove('hide')
+
 }
 
 function editWeatherCard(data, dataNumber, day) {
-  console.log(data)
   document.getElementById(`${day}-date`).textContent = `${data.list[dataNumber].dt_txt}`;
   document.getElementById(`${day}-img`).src = `http://openweathermap.org/img/wn/${data.list[dataNumber].weather[0].icon}.png`
   document.getElementById(`${day}-temp`).textContent = `Temp: ${data.list[dataNumber].main.temp}°F`;
