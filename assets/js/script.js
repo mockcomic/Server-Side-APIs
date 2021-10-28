@@ -89,7 +89,10 @@ function getLocationWeather(location) {
 };
 
 function displayCurrentWeather(data) {
-  document.getElementById('current-temp').textContent = 'Temp'+data.current.temp+'°F';
+  document.getElementById('container').classList.remove('hide')
+  document.getElementById('current-temp').textContent = 'Temp' + data.current.temp + '°F';
+  document.getElementById('current-img').src = `http://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`
+
   document.getElementById('current-wind').textContent = `Wind ${data.current.wind_speed}MPH`;
   document.getElementById('current-humidity').textContent = `Humidity ${data.current.humidity}%`;
   document.getElementById('current-UV').textContent = `UV Index: ${data.current.uvi}`;
@@ -108,11 +111,13 @@ function displayFiveDay(data) {
   editWeatherCard(data, 20, 'three')
   editWeatherCard(data, 28, 'four')
   editWeatherCard(data, 36, 'five')
-
+  document.getElementById('five-day').classList.remove('hide')
 }
 
 function editWeatherCard(data, dataNumber, day) {
+  console.log(data)
   document.getElementById(`${day}-date`).textContent = `${data.list[dataNumber].dt_txt}`;
+  document.getElementById(`${day}-img`).src = `http://openweathermap.org/img/wn/${data.list[dataNumber].weather[0].icon}.png`
   document.getElementById(`${day}-temp`).textContent = `Temp: ${data.list[dataNumber].main.temp}°F`;
   document.getElementById(`${day}-wind`).textContent = `Wind: ${data.list[dataNumber].wind.speed}MPH`;
   document.getElementById(`${day}-humidity`).textContent = `Humidity: ${data.list[dataNumber].main.humidity}%`;

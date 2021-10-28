@@ -1,9 +1,9 @@
 # Week6Challenge-Server-Side-APIs
  
 # Work Day Scheduler Starter Code
-A work day scheduler I made for the UC Berkeley bootcamp. 
-Feel free to use it to keep track of your tasks.
-
+A weather forcast website I made for the UC Berkeley bootcamp. 
+The CSS isn't my best work but it gets the job done.
+I will most likely come back in the future and fine tune the weather cards.
 # User Story
 AS A traveler
 I WANT to see the weather outlook for multiple cities
