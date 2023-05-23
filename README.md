@@ -1,32 +1,21 @@
-# Week6Challenge-Server-Side-APIs
- 
-# Work Day Scheduler Starter Code
-A weather forcast website I made for the UC Berkeley bootcamp. 
-The CSS isn't my best work but it gets the job done.
-I will most likely come back in the future and fine tune the weather cards.
-# User Story
-AS A traveler
-I WANT to see the weather outlook for multiple cities
-SO THAT I can plan a trip accordingly
-# Acceptance Criteria
-GIVEN a weather dashboard with form inputs
-### WHEN I search for a city
+# Weather Forecast Website
+Work Day Scheduler Starter Code
 
-* THEN I am presented with current and future conditions for that city and that city is added to the search history
+This application provides weather forecasts for various cities, a feature that is especially handy for travelers planning their trips. While the CSS might need some refinements, the application fulfills its core functionality effectively. Future plans involve refining the aesthetics of the weather cards for a more polished user experience.
 
-### WHEN I view current weather conditions for that city
+## User Story
+As a traveler, 
+I want to see the weather outlook for multiple cities, 
+so that I can plan my trip accordingly.
 
-* THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+## Acceptance Criteria
+The weather dashboard comes equipped with form inputs for users to request weather data. Here's what you can expect from the application:
 
-### WHEN I view the UV index
+- When a city is searched, the user is presented with current and future weather conditions for that city, and that city is added to the search history.
+- The current weather conditions for a city include the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index.
+- The UV index is color-coded to indicate whether the conditions are favorable (green), moderate (yellow), or severe (red).
+- The future weather conditions for a city are presented as a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity.
+- Clicking on a city in the search history will present the user again with the current and future conditions for that city.
 
-* THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-
-### WHEN I view future weather conditions for that city
-
-* THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-
-### WHEN I click on a city in the search history
-
-* THEN I am again presented with current and future conditions for that city
+The weather forecast website is a practical tool for any traveler, helping you plan your trip based on weather conditions, and ensuring that you're prepared for what lies ahead.
 
